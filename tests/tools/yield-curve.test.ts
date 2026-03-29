@@ -44,7 +44,7 @@ describe("handleGetYieldCurve", () => {
 
     expect(client.fetchData).toHaveBeenCalledWith(
       "YC",
-      "B.U2.EUR.4F.G_N_A.SV_C_YM.SR_10Y",
+      "B.U2.EUR.4F.G_N_C.SV_C_YM.SR_10Y",
       expect.any(Object),
     );
   });
@@ -55,7 +55,7 @@ describe("handleGetYieldCurve", () => {
 
     expect(client.fetchData).toHaveBeenCalledWith(
       "YC",
-      "B.U2.EUR.4F.G_N_A.SV_C_YM.SR_5Y",
+      "B.U2.EUR.4F.G_N_C.SV_C_YM.SR_5Y",
       expect.any(Object),
     );
   });

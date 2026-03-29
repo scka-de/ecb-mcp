@@ -46,12 +46,16 @@ async function fetchWithRetry(
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), config.timeoutMs);
 
-      const response = await fetch(url, {
-        method: "GET",
-        headers,
-        signal: controller.signal,
-      });
-      clearTimeout(timeout);
+      let response: Response;
+      try {
+        response = await fetch(url, {
+          method: "GET",
+          headers,
+          signal: controller.signal,
+        });
+      } finally {
+        clearTimeout(timeout);
+      }
 
       if (response.status >= 500 && attempt < config.maxRetries) {
         const delay = 2 ** attempt * 1000;

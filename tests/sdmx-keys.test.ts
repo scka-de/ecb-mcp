@@ -81,19 +81,29 @@ describe("buildFmKey", () => {
 
 describe("buildYcKey", () => {
   it("builds 10Y AAA yield curve key (defaults)", () => {
-    expect(buildYcKey()).toBe("B.U2.EUR.4F.G_N_A.SV_C_YM.SR_10Y");
+    expect(buildYcKey()).toBe("B.U2.EUR.4F.G_N_C.SV_C_YM.SR_10Y");
   });
 
   it("builds specific maturity", () => {
-    expect(buildYcKey("5Y")).toBe("B.U2.EUR.4F.G_N_A.SV_C_YM.SR_5Y");
+    expect(buildYcKey("5Y")).toBe("B.U2.EUR.4F.G_N_C.SV_C_YM.SR_5Y");
   });
 
   it("builds 3M maturity", () => {
-    expect(buildYcKey("3M")).toBe("B.U2.EUR.4F.G_N_A.SV_C_YM.SR_3M");
+    expect(buildYcKey("3M")).toBe("B.U2.EUR.4F.G_N_C.SV_C_YM.SR_3M");
   });
 
   it("is case-insensitive for maturity", () => {
-    expect(buildYcKey("10y")).toBe("B.U2.EUR.4F.G_N_A.SV_C_YM.SR_10Y");
+    expect(buildYcKey("10y")).toBe("B.U2.EUR.4F.G_N_C.SV_C_YM.SR_10Y");
+  });
+
+  it("uses G_N_A for all_gov issuer type", () => {
+    expect(buildYcKey("10Y", "all_gov")).toBe(
+      "B.U2.EUR.4F.G_N_A.SV_C_YM.SR_10Y",
+    );
+  });
+
+  it("uses G_N_C (AAA) by default", () => {
+    expect(buildYcKey("10Y", "aaa")).toBe("B.U2.EUR.4F.G_N_C.SV_C_YM.SR_10Y");
   });
 });
 

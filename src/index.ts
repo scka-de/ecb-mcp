@@ -55,6 +55,8 @@ Examples of questions this tool answers:
       .describe("End date (YYYY-MM-DD, YYYY-MM, or YYYY)"),
     lastNObservations: z
       .number()
+      .int()
+      .positive()
       .optional()
       .describe("Return only the last N data points"),
   },
@@ -91,6 +93,8 @@ Examples of questions this tool answers:
       .describe("End date (YYYY-MM-DD, YYYY-MM, or YYYY)"),
     lastNObservations: z
       .number()
+      .int()
+      .positive()
       .optional()
       .describe("Return only the last N data points"),
   },
@@ -131,6 +135,8 @@ Examples of questions this tool answers:
     endPeriod: z.string().optional().describe("End date (YYYY-MM, or YYYY)"),
     lastNObservations: z
       .number()
+      .int()
+      .positive()
       .optional()
       .describe("Return only the last N data points"),
   },
@@ -174,6 +180,8 @@ Examples of questions this tool answers:
       .describe("End date (YYYY-MM-DD, YYYY-MM, or YYYY)"),
     lastNObservations: z
       .number()
+      .int()
+      .positive()
       .optional()
       .describe("Return only the last N data points"),
   },
@@ -218,6 +226,8 @@ Examples of questions this tool answers:
     endPeriod: z.string().optional().describe("End date (YYYY-MM, or YYYY)"),
     lastNObservations: z
       .number()
+      .int()
+      .positive()
       .optional()
       .describe("Return only the last N data points"),
   },

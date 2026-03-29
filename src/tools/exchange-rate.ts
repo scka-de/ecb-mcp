@@ -90,6 +90,9 @@ export async function handleConvertCurrency(
       return `No exchange rate data available for EUR/${to}.`;
     }
     rate = Number.parseFloat(rows[rows.length - 1].OBS_VALUE);
+    if (Number.isNaN(rate)) {
+      return `Exchange rate for EUR/${to} is not available (missing observation).`;
+    }
     rateDate = rows[rows.length - 1].TIME_PERIOD;
     result = amount * rate;
   } else if (isToEur) {
@@ -101,6 +104,9 @@ export async function handleConvertCurrency(
       return `No exchange rate data available for EUR/${from}.`;
     }
     rate = Number.parseFloat(rows[rows.length - 1].OBS_VALUE);
+    if (Number.isNaN(rate)) {
+      return `Exchange rate for EUR/${from} is not available (missing observation).`;
+    }
     rateDate = rows[rows.length - 1].TIME_PERIOD;
     result = amount / rate;
   } else {
@@ -126,6 +132,9 @@ export async function handleConvertCurrency(
 
     const fromRate = Number.parseFloat(fromRow.OBS_VALUE);
     const toRate = Number.parseFloat(toRow.OBS_VALUE);
+    if (Number.isNaN(fromRate) || Number.isNaN(toRate)) {
+      return `Exchange rate data is missing for ${Number.isNaN(fromRate) ? from : to}. Cannot compute cross-rate.`;
+    }
     rate = toRate / fromRate;
     rateDate = fromDate;
     result = amount * rate;

@@ -47,8 +47,20 @@ const ICP_MEASURE_MAP: Record<string, string> = {
   INDEX: "INX",
 };
 
+const VALID_SEGMENT = /^[A-Z0-9_+]+$/;
+
 function normalize(value: string): string {
   return value.trim().toUpperCase();
+}
+
+function validateSegment(value: string, label: string): string {
+  const normalized = normalize(value);
+  if (!VALID_SEGMENT.test(normalized)) {
+    throw new Error(
+      `Invalid ${label}: "${value}". Only letters, digits, and underscores are allowed.`,
+    );
+  }
+  return normalized;
 }
 
 /**
@@ -56,8 +68,8 @@ function normalize(value: string): string {
  * Template: {freq}.{target}.EUR.SP00.A
  */
 export function buildExrKey(target: string, freq = "D"): string {
-  const f = FREQ_MAP[normalize(freq)] || normalize(freq);
-  const t = normalize(target);
+  const f = FREQ_MAP[normalize(freq)] || validateSegment(freq, "frequency");
+  const t = validateSegment(target, "currency");
   return `${f}.${t}.EUR.SP00.A`;
 }
 
@@ -87,15 +99,15 @@ export function buildFmKey(type: string): string {
 
 /**
  * Yield curve (YC dataflow).
- * Template: B.U2.EUR.4F.G_N_A.SV_C_YM.{maturity}
+ * Template: B.U2.EUR.4F.{issuer}.SV_C_YM.{maturity}
  *
- * If issuerType is "all_gov", uses G_N_A (all government bonds).
- * If "aaa", uses G_N_A (AAA-rated, which is the ECB default for YC).
+ * issuerType "aaa" (default) uses G_N_C (AAA-rated government bonds).
+ * issuerType "all_gov" uses G_N_A (all government bonds regardless of rating).
  */
 export function buildYcKey(maturity?: string, issuerType?: string): string {
   const m = maturity ? `SR_${normalize(maturity)}` : "SR_10Y";
   const issuer =
-    issuerType && normalize(issuerType) === "ALL_GOV" ? "G_N_A" : "G_N_A";
+    issuerType && normalize(issuerType) === "ALL_GOV" ? "G_N_A" : "G_N_C";
   return `B.U2.EUR.4F.${issuer}.SV_C_YM.${m}`;
 }
 
@@ -107,8 +119,9 @@ export function buildYcKey(maturity?: string, issuerType?: string): string {
  * Measure defaults to "ANR" (annual rate of change).
  */
 export function buildIcpKey(country = "U2", measure = "annual_rate"): string {
-  const c = normalize(country);
-  const m = ICP_MEASURE_MAP[normalize(measure)] || normalize(measure);
+  const c = validateSegment(country, "country");
+  const m =
+    ICP_MEASURE_MAP[normalize(measure)] || validateSegment(measure, "measure");
   return `M.${c}.N.000000.4.${m}`;
 }
 
@@ -125,7 +138,7 @@ export function buildBsiKey(
   measure = "outstanding",
   country = "U2",
 ): string {
-  const c = normalize(country);
+  const c = validateSegment(country, "country");
   const agg = normalize(aggregate);
   const item = MONEY_AGGREGATE_MAP[agg];
   if (!item) {
