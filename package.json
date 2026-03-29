@@ -1,0 +1,58 @@
+{
+  "name": "ecb-mcp",
+  "version": "0.1.0",
+  "mcpName": "io.github.scka-de/ecb-mcp",
+  "description": "MCP server for European Central Bank data — exchange rates, interest rates, yield curves, inflation, money supply, and more via the ECB SDMX API",
+  "type": "module",
+  "bin": {
+    "ecb-mcp": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsx src/index.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:integration": "INTEGRATION=true vitest run",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "ecb",
+    "european-central-bank",
+    "exchange-rates",
+    "interest-rates",
+    "inflation",
+    "yield-curve",
+    "money-supply",
+    "sdmx",
+    "macro",
+    "fintech"
+  ],
+  "author": "scka-de",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/scka-de/ecb-mcp"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "csv-parse": "^5.6.0",
+    "fast-xml-parser": "^5.2.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.0",
+    "@types/node": "^22.10.0",
+    "tsup": "^8.4.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.1.0"
+  }
+}
