@@ -1,7 +1,7 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.scka-de/ecb-mcp",
-  "description": "European Central Bank data for AI agents — exchange rates, interest rates, yield curves, inflation, money supply, and 100+ datasets via the ECB SDMX API. No API key required.",
+  "description": "ECB data for AI agents — rates, yields, inflation, money supply, and 100+ datasets. No API key.",
   "repository": {
     "url": "https://github.com/scka-de/ecb-mcp",
     "source": "github"
