@@ -1,6 +1,6 @@
 {
   "name": "ecb-mcp",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "mcpName": "io.github.scka-de/ecb-mcp",
   "description": "MCP server for European Central Bank data — exchange rates, interest rates, yield curves, inflation, money supply, and more via the ECB SDMX API",
   "type": "module",
@@ -8,7 +8,9 @@
     "ecb-mcp": "./dist/index.js"
   },
   "main": "./dist/index.js",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup",
     "dev": "tsx src/index.ts",
